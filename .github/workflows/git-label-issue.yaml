@@ -3,7 +3,7 @@ name: Send notification to discord for every issue creation label "pager-duty"
 on:
  issues:
    type: [opened, edited, deleted, closed, reopened]
- workflow_dispatch:  
+   
 
 
 jobs:
