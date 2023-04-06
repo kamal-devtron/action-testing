@@ -6,14 +6,14 @@ on:
  workflow_dispatch:  
 
 
-job:
+jobs:
  send-issue:
     runs-on: ubuntu:latest
     steps:
      - if: contains(github.event.issue.labels.*.name, 'pager-duty')
        name: custom issues
        uses: appleboy/discord-action@master
-        with:
+       with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#48f442"
