@@ -1,0 +1,21 @@
+name: Send notification to discord for every issue creation label "pager-duty"
+
+on:
+ issues:
+   type: [opened, edited, deleted, closed, reopened]
+ workflow_dispatch:  
+
+
+job:
+ send-issue:
+    runs-on: ubuntu:latest
+    steps:
+     - if: contains(github.event.issue.labels.*.name, 'pager-duty')
+       name: custom issues
+       uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#48f442"
+          username: "GitHub Bot"
+          message: "A new commit has been pushed with custom color."
