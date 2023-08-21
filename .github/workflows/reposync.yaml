@@ -32,7 +32,7 @@ jobs:
          git config --global user.name kamal-devtron
          if git rev-parse --verify main >/dev/null 2>&1; then
               git checkout -b kamal
-              git push origin kamal 
+              git config --global credential.helper 'cache --timeout=3600' 
          else
               echo "Branch does not exist"
          fi     
