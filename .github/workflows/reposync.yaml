@@ -28,16 +28,13 @@ jobs:
          git status && git checkout main && git pull && rm -rf .github
 
          cd ../testing && git status && git checkout main && git pull
-         
-         git branch | grep release-candidate
-         k=$(echo $?)
-          
-         if [ $k == 1 ]
-         then
-           git checkout -b release-candidate
+         if git rev-parse --verify kamal >/dev/null 2>&1; then
+              echo "Branch exists"
          else
-           echo "Branch exsist"  
-         fi  
+              echo "Branch does not exist"
+         fi     
+          
+          
 
          git remote add oss-devtron ../action-testing && git remote -v && git remote update && git merge oss-devtron/main
          
