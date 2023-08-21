@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-         export GIT_USERNAME="${GIT_CONFIG_NAME}"
-         export GIT_PASSWORD="${GH_TOKEN}"
-         export ENTERPRISE_REPO="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/devtron-labs/devtron-enterprise.git"
-         git clone https://github.com/devtron-labs/devtron
+         # export GIT_USERNAME="${GIT_CONFIG_NAME}"
+         # export GIT_PASSWORD="${GH_TOKEN}"
+         export ENTERPRISE_REPO="https://github.com/kamal-devtron/testing.git"
+         git clone https://github.com/kamal-devtron/action-testing.git
          git clone $ENTERPRISE_REPO
 
-         cd devtron && export GIT_COMMIT_ID=`git log --format="%H" -n 1`
+         cd action-testing && export GIT_COMMIT_ID=`git log --format="%H" -n 1`
 
          export GIT_COMMIT=${GIT_COMMIT_ID:0:8}
          echo $GIT_COMMIT
@@ -30,7 +30,7 @@ jobs:
 
          git status && git checkout main && git pull && rm -rf .github
 
-         cd ../devtron-enterprise && git status && git checkout main && git pull
+         cd ../testing && git status && git checkout main && git pull
          git branch | grep release-candidate
           k=$(echo $?)
           
@@ -41,19 +41,19 @@ jobs:
             echo "Branch exsist"  
 
          git remote add oss-devtron ../devtron && git remote -v && git remote update && git merge oss-devtron/main
-         export WIRE_GEN_FILE_NAME="wire_gen.go"
-         export CONFLICT_FILES=`git diff --name-only --diff-filter=U --relative`
+         # export WIRE_GEN_FILE_NAME="wire_gen.go"
+         # export CONFLICT_FILES=`git diff --name-only --diff-filter=U --relative`
 
-         if [[ $WIRE_GEN_FILE_NAME = $CONFLICT_FILES ]]
-         then
-            rm $WIRE_GEN_FILE_NAME
-            docker container run -w /devtron -v ./:/devtron golang  /bin/sh -c "go install github.com/google/wire/cmd/wire@latest && wire"
-            git add $WIRE_GEN_FILE_NAME
-         elif [[ $CONFLICT_FILES != "" ]]
-         then
-            echo "more conflict files"
-            exit 1
-         fi
+         # if [[ $WIRE_GEN_FILE_NAME = $CONFLICT_FILES ]]
+         # then
+         #    rm $WIRE_GEN_FILE_NAME
+         #    docker container run -w /devtron -v ./:/devtron golang  /bin/sh -c "go install github.com/google/wire/cmd/wire@latest && wire"
+         #    git add $WIRE_GEN_FILE_NAME
+         # elif [[ $CONFLICT_FILES != "" ]]
+         # then
+         #    echo "more conflict files"
+         #    exit 1
+         # fi
          git commit -m "OSS main synced" && git status
          git checkout -b oss-enterprise-sync-$GIT_COMMIT && git push -u origin oss-enterprise-sync-$GIT_COMMIT
          PR_RESPONSE=$(gh pr create --title "SYNC: OSS sync for $GIT_COMMIT" --fill --base main --head oss-enterprise-sync-$GIT_COMMIT --repo $ENTERPRISE_REPO)
