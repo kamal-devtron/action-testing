@@ -28,6 +28,8 @@ jobs:
          git status && git checkout main && git pull 
 
          cd ../testing && git status && git checkout main && git pull
+         git config --global user.email kamal@devtron.ai
+         git config --global user.name kamal-devtron
          if git rev-parse --verify main >/dev/null 2>&1; then
               git checkout -b kamal
               git push origin kamal 
