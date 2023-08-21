@@ -29,7 +29,7 @@ jobs:
 
          cd ../testing && git status && git checkout main && git pull
          if git rev-parse --verify kamal >/dev/null 2>&1; then
-              echo "Branch exists"
+              git checkout -b kamal
          else
               echo "Branch does not exist"
          fi     
