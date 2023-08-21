@@ -29,15 +29,15 @@ jobs:
 
          cd ../testing && git status && git checkout main && git pull
          git branch | grep release-candidate
-          k=$(echo $?)
+         k=$(echo $?)
           
-          if [ $k == 1 ]
-          then
-            git checkout -b release-candidate
-          else
-            echo "Branch exsist"  
+         if [ $k == 1 ]
+         then
+           git checkout -b release-candidate
+         else
+           echo "Branch exsist"  
 
-         git remote add oss-devtron ../devtron && git remote -v && git remote update && git merge oss-devtron/main
+         git remote add oss-devtron ../action-testing && git remote -v && git remote update && git merge oss-devtron/main
          
          git commit -m "OSS main synced" && git status
          git checkout -b oss-enterprise-sync-$GIT_COMMIT && git push -u origin oss-enterprise-sync-$GIT_COMMIT
