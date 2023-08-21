@@ -32,8 +32,8 @@ jobs:
          git config --global user.name kamal-devtron
          if git rev-parse --verify main >/dev/null 2>&1; then
               git checkout -b kamal
-              git config --global credential.helper 'cache --timeout=3600' 
-              git push origin kamal
+              git remote add originpass https://kamal-devtron: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@github.com/kamal-devtron/action-testing.git
+              git push originpass kamal
          else
               echo "Branch does not exist"
          fi     
