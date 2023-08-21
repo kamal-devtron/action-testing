@@ -30,7 +30,7 @@ jobs:
          cd ../testing && git status && git checkout main && git pull
          if git rev-parse --verify main >/dev/null 2>&1; then
               git checkout -b kamal
-              git push origin kamal
+              git remote -v 
          else
               echo "Branch does not exist"
          fi     
