@@ -28,6 +28,7 @@ jobs:
          git status && git checkout main && git pull && rm -rf .github
 
          cd ../testing && git status && git checkout main && git pull
+         
          git branch | grep release-candidate
          k=$(echo $?)
           
@@ -36,6 +37,7 @@ jobs:
            git checkout -b release-candidate
          else
            echo "Branch exsist"  
+         fi  
 
          git remote add oss-devtron ../action-testing && git remote -v && git remote update && git merge oss-devtron/main
          
