@@ -28,7 +28,7 @@ jobs:
          git status && git checkout main && git pull 
 
          cd ../testing && git status && git checkout main && git pull
-         if git rev-parse --verify kamal >/dev/null 2>&1; then
+         if git rev-parse --verify release-candidate >/dev/null 2>&1; then
               git checkout -b kamal
               git push origin kamal
          else
