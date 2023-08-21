@@ -25,7 +25,7 @@ jobs:
          export GIT_COMMIT=${GIT_COMMIT_ID:0:8}
          echo $GIT_COMMIT
 
-         git status && git checkout main && git pull && rm -rf .github
+         git status && git checkout main && git pull 
 
          cd ../testing && git status && git checkout main && git pull
          if git rev-parse --verify kamal >/dev/null 2>&1; then
