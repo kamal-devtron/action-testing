@@ -30,13 +30,13 @@ jobs:
          cd ../testing && git status && git checkout main && git pull
          git config --global user.email kamal@devtron.ai
          git config --global user.name kamal-devtron
-         git branch -a | grep release-candiadte 
-         k=$(echo $?)
-         if [ $k == 1 ]
-         then
-           git checkout -b release-candidate
+         if git rev-parse --verify origin/release-candidate >/dev/null 2>&1; then
+            echo "Branch exsist"
          else
-           echo "git branch is present"
+           git checkout -b kamal
+           git pull origin kamal
+         fi  
+           
           
           
 
