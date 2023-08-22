@@ -23,6 +23,6 @@ jobs:
       - name: Create branch if not present
         if: steps.check-branch.outputs.branch_exists == 'false'
         run: |
-          BRANCH_NAME=feature/my-new-branch  # Change this to the branch you want to create
+          BRANCH_NAME=kamal  # Change this to the branch you want to create
           git checkout -b $BRANCH_NAME
           git push origin $BRANCH_NAME
