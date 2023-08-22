@@ -34,7 +34,7 @@ jobs:
             echo "Branch exsist"
          else
            git checkout -b kamal
-           git pull origin kamal
+           git push origin kamal
          fi  
            
           
