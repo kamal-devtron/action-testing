@@ -18,6 +18,7 @@ jobs:
          set -ex
          export GIT_USERNAME="${GIT_CONFIG_NAME}"
          export GIT_PASSWORD="${GH_TOKEN}"
+
          export ENTERPRISE_REPO="https://github.com/kamal-devtron/testing.git"
          git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/kamal-devtron/action-testing.git
          git clone $ENTERPRISE_REPO
@@ -28,10 +29,10 @@ jobs:
          echo $GIT_COMMIT
 
          git status && git checkout main && git pull 
-
+         
          cd ../testing && git status && git checkout main && git pull
-         git config --global user.email kamal@devtron.ai
-         git config --global user.name kamal-devtron
+         git config --global user.email $GIT_CONFIG_EMAIL
+         git config --global user.name $GIT_USERNAME
          if git rev-parse --verify origin/release-candidate >/dev/null 2>&1; then
             echo "Branch exsist"
          else
