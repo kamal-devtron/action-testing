@@ -33,6 +33,7 @@ jobs:
           # Fetch the new branch from the source repository
           git pull origin main
           git checkout -b $TARGET_BRANCH_NAME
+          git fetch $TARGET_BRANCH_NAME
 
           # Push the new branch to the target repository
           git push origin $TARGET_BRANCH_NAME
