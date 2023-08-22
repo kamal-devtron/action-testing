@@ -24,7 +24,8 @@ jobs:
          git clone $ENTERPRISE_REPO
 
          cd action-testing && export GIT_COMMIT_ID=`git log --format="%H" -n 1`
-
+         git config --global user.email $GIT_CONFIG_EMAIL
+         git config --global user.name $GIT_USERNAME
          export GIT_COMMIT=${GIT_COMMIT_ID:0:8}
          echo $GIT_COMMIT
 
