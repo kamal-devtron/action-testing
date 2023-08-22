@@ -34,7 +34,7 @@ jobs:
           git pull origin main
           git checkout -b $TARGET_BRANCH_NAME
           git fetch origin
-          git rebase origin/$TARGET_BRANCH_NAME
+          git rebase $TARGET_BRANCH_NAME
 
           # Push the new branch to the target repository
           git push origin $TARGET_BRANCH_NAME
