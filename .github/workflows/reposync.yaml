@@ -19,8 +19,8 @@ jobs:
          export GIT_USERNAME="${GIT_CONFIG_NAME}"
          export GIT_PASSWORD="${GH_TOKEN}"
 
-         export ENTERPRISE_REPO="https://github.com/kamal-devtron/testing.git"
-         git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/kamal-devtron/action-testing.git
+         export ENTERPRISE_REPO="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/kamal-devtron/testing.git"
+         git clone https://github.com/kamal-devtron/action-testing.git
          git clone $ENTERPRISE_REPO
 
          cd action-testing && export GIT_COMMIT_ID=`git log --format="%H" -n 1`
