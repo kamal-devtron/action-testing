@@ -28,7 +28,7 @@ jobs:
 
           # Clone the target repository
           git clone --depth=1 https://github.com/kamal-devtron/testing.git testing
-          cd target-repo
+          cd testing
 
           # Fetch the new branch from the source repository
           git fetch --no-tags origin $TARGET_BRANCH_NAME:$TARGET_BRANCH_NAME
