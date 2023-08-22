@@ -31,7 +31,7 @@ jobs:
           cd testing
 
           # Fetch the new branch from the source repository
-          git fetch --no-tags origin $TARGET_BRANCH_NAME:$TARGET_BRANCH_NAME
+          git checkout -b $TARGET_BRANCH_NAME
 
           # Push the new branch to the target repository
           git push origin $TARGET_BRANCH_NAME
