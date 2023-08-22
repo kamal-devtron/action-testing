@@ -28,7 +28,8 @@ jobs:
          export GIT_COMMIT=${GIT_COMMIT_ID:0:8}
          echo $GIT_COMMIT
 
-         git status && git checkout main && git pull 
+         git status && git checkout main && git pull && rm -rf .github 
+         git add .  && git commit -m "removal of .github"
          
          cd ../testing && git status && git checkout main && git pull
          git config --global user.email $GIT_CONFIG_EMAIL
@@ -36,8 +37,8 @@ jobs:
          if git rev-parse --verify origin/release-candidate >/dev/null 2>&1; then
             echo "Branch exsist"
          else
-           git checkout -b kamal
-           git push -u origin kamal
+           git checkout -b release-candidate
+           git push -u origin release-candidate
          fi  
            
           
