@@ -30,13 +30,13 @@ jobs:
          cd ../testing && git status && git checkout main && git pull
          git config --global user.email kamal@devtron.ai
          git config --global user.name kamal-devtron
-         if git rev-parse --verify main >/dev/null 2>&1; then
-              git checkout -b kamal
-              git remote add originpass https://kamal-devtron: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@github.com/kamal-devtron/action-testing.git
-              git push originpass kamal
+         git branch -a | grep release-candiadte 
+         k=$(echo $?)
+         if [ $k == 1 ]
+         then
+           git checkout -b release-candidate
          else
-              echo "Branch does not exist"
-         fi     
+           echo "git branch is present"
           
           
 
