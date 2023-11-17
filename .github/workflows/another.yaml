@@ -1,0 +1,41 @@
+name: Create and Push Branch
+
+on:
+  push:
+    branches:
+      - main  # Change this to your source branch
+
+jobs:
+  create-and-push-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git credentials for source repository
+        run: |
+          git config user.name "kamal-devtron"
+          git config user.email "kamal@devtron.ai"
+
+      - name: Create and push branch
+        run: |
+          SOURCE_BRANCH_NAME=main  # Change this to your source branch
+          TARGET_BRANCH_NAME=feature/my-new-branch  # Change this to the branch you want to create in the target repository
+
+          # Create a new branch in the source repository
+          git checkout -b $TARGET_BRANCH_NAME
+          git push origin $TARGET_BRANCH_NAME
+
+          # Clone the target repository
+          git clone --depth=1 https://github.com/kamal-devtron/testing.git testing
+          cd testing
+
+          # Fetch the new branch from the source repository
+          git pull origin main
+          git checkout -b $TARGET_BRANCH_NAME
+          git fetch origin
+          git pull
+       
+
+          # Push the new branch to the target repository
+          git push origin $TARGET_BRANCH_NAME

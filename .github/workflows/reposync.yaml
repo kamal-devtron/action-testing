@@ -1,0 +1,59 @@
+name: ent-repo-sync
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+         set -ex
+         export GIT_USERNAME="${GIT_CONFIG_NAME}"
+         export GIT_PASSWORD="${GH_TOKEN}"
+
+         export ENTERPRISE_REPO="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/kamal-devtron/testing.git"
+         git clone https://github.com/kamal-devtron/action-testing.git
+         git clone $ENTERPRISE_REPO
+
+         cd action-testing && export GIT_COMMIT_ID=`git log --format="%H" -n 1`
+         git config --global user.email $GIT_CONFIG_EMAIL
+         git config --global user.name $GIT_USERNAME
+         export GIT_COMMIT=${GIT_COMMIT_ID:0:8}
+         echo $GIT_COMMIT
+
+         git status && git checkout main && git pull && rm -rf .github 
+         git add .  && git commit -m "removal of .github"
+         
+         cd ../testing && git status && git checkout main && git pull
+         git config --global user.email $GIT_CONFIG_EMAIL
+         git config --global user.name $GIT_USERNAME
+         if git rev-parse --verify origin/release-candidate >/dev/null 2>&1; then
+            echo "Branch exsist"
+         else
+           git checkout -b release-candidate
+           git push -u origin release-candidate
+         fi  
+           
+          
+          
+
+         git remote add oss-devtron ../action-testing && git remote -v && git remote update && git merge oss-devtron/main
+         
+         git commit -m "OSS main synced" && git status
+         git checkout -b oss-enterprise-sync-$GIT_COMMIT && git push -u origin oss-enterprise-sync-$GIT_COMMIT
+         PR_RESPONSE=$(gh pr create --title "SYNC: OSS sync for $GIT_COMMIT" --fill --base main --head oss-enterprise-sync-$GIT_COMMIT --repo $ENTERPRISE_REPO)
+         echo "FINAL PR RESPONSE: $PR_RESPONSE"
+      env:
+       GH_TOKEN: ${{ secrets.GIT_TARGET_TOKEN }}
+       GIT_CONFIG_NAME: ${{ secrets.GIT_TARGET_USERNAME }}
+       GIT_CONFIG_EMAIL: ${{ secrets.GIT_TARGET_EMAIL }}
+   
+       
